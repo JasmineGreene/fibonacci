@@ -1,19 +1,18 @@
 import clr
-import random
+import System
 clr.AddReference('System.Drawing')
 clr.AddReference('System.Windows.Forms')
-from System.Drawing import *
-from System.Windows.Forms import *
-from System.Threading import *
+
+rand = System.Random()
 
 def show(param):
     a = param[0]
     n = param[1]
-    form = Form()
-    form.ClientSize = Size(a*n,a*n)
-    buttom = [[Button() for j in range(n)] for i in range(n)]
+    form = System.Windows.Forms.Form()
+    form.ClientSize = System.Drawing.Size(a*n,a*n)
+    buttom = [[System.Windows.Forms.Button() for j in range(n)] for i in range(n)]
     def sh(i,j):
-        shh(i,j,Color.FromArgb(random.randint(0,255),random.randint(0,255),random.randint(0,255)))
+        shh(i,j,System.Drawing.Color.FromArgb(rand.Next(256),rand.Next(256),rand.Next(256)))
     def shh(i,j,c):
         if buttom[i][j].BackColor == c:
             return
@@ -24,31 +23,31 @@ def show(param):
     for i in range(n):
         for j in range(n):
             form.Controls.Add(buttom[i][j])
-            buttom[i][j].BackColor = Color.AliceBlue
-            buttom[i][j].Location = Point(a*i,a*j)
-            buttom[i][j].ClientSize = Size(a,a)
+            buttom[i][j].BackColor = System.Drawing.Color.AliceBlue
+            buttom[i][j].Location = System.Drawing.Point(a*i,a*j)
+            buttom[i][j].ClientSize = System.Drawing.Size(a,a)
             buttom[i][j].MouseDown += cl(i,j)
-    Application.Run(form)
+    System.Windows.Forms.Application.Run(form)
 
-st = ParameterizedThreadStart(show)
+st = System.Threading.ParameterizedThreadStart(show)
 
 def click(o,e):
-    th = Thread(st)
+    th = System.Threading.Thread(st)
     th.Start((int(t1.Text),int(t2.Text)))
 
-m = Form()
-m.ClientSize = Size(275,110)
-t1 = TextBox()
-t2 = TextBox()
+m = System.Windows.Forms.Form()
+m.ClientSize = System.Drawing.Size(275,110)
+t1 = System.Windows.Forms.TextBox()
+t2 = System.Windows.Forms.TextBox()
 t1.Text = "30"
 t2.Text = "10"
 m.Controls.Add(t1)
 m.Controls.Add(t2)
-t1.Location = Point(25,25)
-t2.Location = Point(150,25)
-b = Button()
+t1.Location = System.Drawing.Point(25,25)
+t2.Location = System.Drawing.Point(150,25)
+b = System.Windows.Forms.Button()
 m.Controls.Add(b)
-b.Location = Point(25,60)
-b.Size = Size(225,25)
+b.Location = System.Drawing.Point(25,60)
+b.Size = System.Drawing.Size(225,25)
 b.Click += click
-Application.Run(m)
+System.Windows.Forms.Application.Run(m)
