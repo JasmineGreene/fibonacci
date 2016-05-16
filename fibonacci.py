@@ -10,6 +10,8 @@ def show(param):
     n = param[1]
     form = System.Windows.Forms.Form()
     form.ClientSize = System.Drawing.Size(a*n,a*n)
+    form.MaximizeBox = False
+    form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
     buttom = [[System.Windows.Forms.Button() for j in range(n)] for i in range(n)]
     def sh(i,j):
         shh(i,j,System.Drawing.Color.FromArgb(rand.Next(256),rand.Next(256),rand.Next(256)))
@@ -20,6 +22,16 @@ def show(param):
         shh(j,(i+j)%n,c)
     def cl(i,j):
         return lambda o,e:sh(i,j)
+    def een(i,j):
+        buttom[j][(i+j)%n].Text = "N"
+        buttom[(j-i)%n][i].Text = "P"
+    def en(i,j):
+        return lambda o,e:een(i,j)
+    def llv(i,j):
+        buttom[j][(i+j)%n].Text = ""
+        buttom[(j-i)%n][i].Text = ""
+    def lv(i,j):
+        return lambda o,e:llv(i,j)
     for i in range(n):
         for j in range(n):
             form.Controls.Add(buttom[i][j])
@@ -27,6 +39,8 @@ def show(param):
             buttom[i][j].Location = System.Drawing.Point(a*i,a*j)
             buttom[i][j].ClientSize = System.Drawing.Size(a,a)
             buttom[i][j].MouseDown += cl(i,j)
+            buttom[i][j].MouseEnter += en(i,j)
+            buttom[i][j].MouseLeave += lv(i,j)
     System.Windows.Forms.Application.Run(form)
 
 st = System.Threading.ParameterizedThreadStart(show)
@@ -37,6 +51,8 @@ def click(o,e):
 
 m = System.Windows.Forms.Form()
 m.ClientSize = System.Drawing.Size(275,110)
+m.MaximizeBox = False
+m.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
 t1 = System.Windows.Forms.TextBox()
 t2 = System.Windows.Forms.TextBox()
 t1.Text = "30"
